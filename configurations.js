@@ -4,8 +4,15 @@ const host_local = "http://localhost:8080";
 const host_remote = "https://ducks-service-???.onrender.com";
 
 function getHost() {
-    // return (mode == 0) ? host_local : host_remote;
-    return host_local
+  return (mode == 0) ? host_local : host_remote;
+    //return host_local
+}
+
+function isLoggedIn() {
+  if(localStorage.getItem("token")) {
+    return true;} 
+  else {
+    return false;}
 }
 
 function saveTheToken(token) {
@@ -33,9 +40,10 @@ let configuration = {
 
 
 async function login() {    
-    let email = document.getElementById("email-signin").value;
-    let password = document.getElementById("password-signin").value;
-    let customer = {email: email, password: password}
+    let email = document.getElementById("email-login").value;
+    let password = document.getElementById("password-login").value;
+    let username = email.substring(0, email.indexOf("@"));
+    let customer = {username: username, email: email, password: password}
     let request = {
         method: "POST",
         headers: {
@@ -65,7 +73,8 @@ async function login() {
 async function signup() {
     let email = document.getElementById("email-signup").value;
     let password = document.getElementById("password-signup").value;
-    let customer = {email:email, password: password}
+    let username = email.substring(0, email.indexOf("@"));
+    let customer = {username: username, email:email, password: password}
     let request = {
         method: "POST",
         headers: {
@@ -93,12 +102,6 @@ async function signup() {
 async function logout() {   
   removeTheToken();  
 }
-
-function addBasket(flowerId) {
-  return;
-}
-
-
 
 async function getAll() {
   let response = await fetch(host_local + "/flowers", {

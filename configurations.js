@@ -52,21 +52,6 @@ async function updateItemCart() {
 }
 
 
-async function updateNavbar() {
-  try {
-      const navigation = document.getElementsByClassName("navbar")[0];
-      let loginTag = navigation.children[navigation.children.length - 1];
-      if (configuration.isLoggedIn()) {
-          loginTag.innerHTML = `<li class="right"><a href="login.html" onclick="logout()">Logout</a></li>`;
-      } else {
-          loginTag.innerHTML = `<li class="right"><a href="login.html">Login</a></li>`;
-      }
-      await updateItemCart();
-  } catch (error) {
-      console.error("Error updating navbar:", error);
-  }
-}
-
 
 function emptyBasket() {
   localStorage.removeItem("basket");
@@ -76,10 +61,9 @@ function emptyBasket() {
 
 
 async function login() {    
-    let email = document.getElementById("email-login").value;
+    let username = document.getElementById("username-login").value;
     let password = document.getElementById("password-login").value;
-    let username = email.substring(0, email.indexOf("@"));
-    let customer = {username: username, email: email, password: password}
+    let customer = {username: username, password: password}
     let request = {
         method: "POST",
         headers: {
@@ -109,7 +93,7 @@ async function login() {
 async function signup() {
     let email = document.getElementById("email-signup").value;
     let password = document.getElementById("password-signup").value;
-    let username = email.substring(0, email.indexOf("@"));
+    let username = document.getElementById("username-signup").value;
     let customer = {username: username, email:email, password: password}
     let request = {
         method: "POST",

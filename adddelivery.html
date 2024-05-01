@@ -171,10 +171,6 @@
 
 
 </div>
-
-
-
-
 </body>
 <script src="configurations.js"></script>
 <script>
@@ -241,16 +237,11 @@ function continueButton() {
             state: state,
             zip: zip
         };
+        
+        localStorage.setItem("info", JSON.stringify(info)); 
+        
+        window.location.href = "placeorder.html"
 
-        localStorage.setItem("info", JSON.stringify(info));
-
-    //     if (isLoggedIn()) {
-    //       window.location.href = "placeorder.html"; 
-    // } else {
-    //       window.location.href = "login.html"; 
-    // }
-    //window.location.href = "placeorder.html"
-    window.location.href = "login.html"
     }
 
     function toggleLoginLinks() {

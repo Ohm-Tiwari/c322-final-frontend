@@ -49,9 +49,6 @@ function emptyBasket() {
   localStorage.removeItem("itemCount");
 }
 
-
-
-
 async function login() {    
     let username = document.getElementById("username-login").value;
     let password = document.getElementById("password-login").value;

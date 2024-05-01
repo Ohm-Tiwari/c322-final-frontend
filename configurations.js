@@ -5,7 +5,6 @@ const host_remote = "https://ducks-service-???.onrender.com";
 
 function getHost() {
   return (mode == 0) ? host_local : host_remote;
-    //return host_local
 }
 
 function isLoggedIn() {
@@ -37,6 +36,43 @@ let configuration = {
   host: () => getHost(), 
   token: () => getTheToken()    
 };
+
+
+updateNavbar();
+updateItemCart();
+
+
+async function updateItemCart() {
+  try {
+      let itemCount = 0;
+      document.getElementById("itemCount").textContent = itemCount;
+  } catch (error) {
+      console.error("Error updating item cart:", error);
+  }
+}
+
+
+async function updateNavbar() {
+  try {
+      const navigation = document.getElementsByClassName("navbar")[0];
+      let loginTag = navigation.children[navigation.children.length - 1];
+      if (configuration.isLoggedIn()) {
+          loginTag.innerHTML = `<li class="right"><a href="login.html" onclick="logout()">Logout</a></li>`;
+      } else {
+          loginTag.innerHTML = `<li class="right"><a href="login.html">Login</a></li>`;
+      }
+      await updateItemCart();
+  } catch (error) {
+      console.error("Error updating navbar:", error);
+  }
+}
+
+
+function emptyBasket() {
+  localStorage.removeItem("basket");
+}
+
+
 
 
 async function login() {    

@@ -10,7 +10,8 @@
 <body>
     <div class="navbar">
         
-        <a href="cart.html"><i class="fa fa-fw fa-shopping-cart"></i> </a> 
+        <a href="cart.html"><i class="fa fa-fw fa-shopping-cart"></i> </a>
+        <li class="right"><a href="placeorder.html"><span id="itemCount">0</span></a></li>   
         <a href="login.html"><i class="fa fa-fw fa-user"></i> </a>
         <a href="index.html">Help</a>
         <a href="trackorder.html">Track Order</a> 
@@ -19,7 +20,54 @@
 
     <p style="font-size: 20px; color: black; font-family: Arial;"><b>My Orders</b></p>
     <hr>
-    <p>You have no orders.</p>
+    <div id="orderList"></div>
     
 </body>
+<script src="configurations.js"></script>
+<script>
+    let host = getHost();
+    let orders = [];
+    displayOrders();
+
+    async function getOrders(token){
+            try {
+                let response = await fetch(`${host}/orders`, {
+                    headers: {
+                         "Authorization": `Bearer ${token}`
+                    }
+                });
+                if (!response.ok) {throw new Error('Failed to fetch orders');}
+                return await response.json();
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+            }
+        }
+
+        async function displayOrders(){
+            let token = configuration.token(); 
+            try {
+                orders = await getOrders(token);
+                const orderList = document.getElementById("orderList");
+                orderList.innerHTML = "";
+
+                orders.forEach(order => {
+                    const div = document.createElement("div");
+                    div.className = "order-card";
+                    div.innerHTML = `
+                    <h3>Order ID: ${order.id}</h3>
+                    <p>Flower Name: ${order.flowerName}</p>
+                    <p>Recipient Name: ${order.recipientName}</p>
+                    <p>Total Cost: $${order.totalCost}</p>
+                    <p>Status: ${order.status}</p>
+                    `;
+                    orderList.appendChild(div);
+                });
+            } catch (error) {
+                console.error('Error fetching or displaying orders:', error);
+                const orderList = document.getElementById("orderList");
+                orderList.innerHTML = "<p>Failed to fetch orders.</p>";
+            }
+        }
+     
+</script>
 </html>

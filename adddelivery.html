@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="navbar.css">
+        
         <title>Form</title>
       </head>
       <style>
@@ -50,7 +51,8 @@
 <body>
   <div class="navbar">
   
-    <a href="cart.html"><i class="fa fa-fw fa-shopping-cart"></i> </a> 
+    <a href="cart.html"><i class="fa fa-fw fa-shopping-cart"></i> </a>
+    <li class="right"><a href="placeorder.html"><span id="itemCount">0</span></a></li>  
     <a href="login.html"><i class="fa fa-fw fa-user"></i> </a>
     <a href="index.html">Help</a>
     <a href="trackorder.html">Track Order</a> 
@@ -222,6 +224,13 @@ function continueButton() {
         let state = document.getElementById("state").value;
         let zip = document.getElementById("zip").value;
 
+        if(!firstName || !lastName 
+        || !relationship || !address || 
+        !city || !state || !zip){
+          alert("Fill in required fields (*)");
+          return;
+        }
+
         let info = {
             firstName: firstName,
             lastName: lastName,
@@ -233,14 +242,14 @@ function continueButton() {
             zip: zip
         };
 
-
         localStorage.setItem("info", JSON.stringify(info));
 
-        if (isLoggedIn()) {
-          window.location.href = "placeorder.html"; 
-    } else {
-          window.location.href = "login.html"; 
-    }
+    //     if (isLoggedIn()) {
+    //       window.location.href = "placeorder.html"; 
+    // } else {
+    //       window.location.href = "login.html"; 
+    // }
+    window.location.href = "placeorder.html"
     }
 
     function toggleLoginLinks() {

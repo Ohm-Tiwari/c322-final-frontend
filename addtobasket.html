@@ -20,7 +20,8 @@
 </head>
 <body>
     <div class="navbar">     
-        <a href="cart.html"><i class="fa fa-fw fa-shopping-cart"></i> </a> 
+        <a href="cart.html"><i class="fa fa-fw fa-shopping-cart"></i> </a>
+        <li class="right"><a href="placeorder.html"><span id="itemCount">0</span></a></li>  
         <a href="login.html"><i class="fa fa-fw fa-user"></i> </a>
         <a href="index.html">Help</a>
         <a href="trackorder.html">Track Order</a> 
@@ -113,6 +114,17 @@
         
         localStorage.setItem("purchasePrice", selectedPrice);
         localStorage.setItem("deliveryDate", deliveryDate);
+
+        let cartItem = {
+            flowerId: localStorage.getItem("flowerId"),
+            flowerName: localStorage.getItem("flowerName"),
+            deliveryDate: deliveryDate,
+            purchaseOption: oneTimePurchaseOption.checked ? "oneTimePurchase" : "sub",
+            cost: selectedPrice 
+        };
+
+
+        localStorage.setItem("cartItem", JSON.stringify(cartItem));
         
         window.location.href = "adddelivery.html";
     }

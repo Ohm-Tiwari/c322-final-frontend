@@ -1,4 +1,4 @@
-const mode = 0;
+const mode = 1;
 
 const host_local = "http://localhost:8080";
 const host_remote = "https://finalbackend-latest.onrender.com";
@@ -16,12 +16,12 @@ function isLoggedIn() {
 
 function saveTheToken(token) {
   localStorage.setItem("token", token);
-  updateTheNavigationBar();
+  updateItemCart();
 } 
 
 function removeTheToken() {
  localStorage.removeItem("token");
- updateTheNavigationBar();
+ updateItemCart();
 } 
 
 function getTheToken() {
@@ -41,12 +41,8 @@ let configuration = {
 
 
 async function updateItemCart() {
-  try {
       let itemCount = 1; 
       document.getElementById("itemCount").textContent = itemCount;
-  } catch (error) {
-      console.error("Error updating item cart:", error);
-  }
 }
 
 function emptyBasket() {
@@ -63,17 +59,18 @@ async function login() {
     let request = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            'Access-Control-Allow-Origin': '*'
         },
         body: JSON.stringify(customer)
       };
       try {
         let response = await fetch(getHost() + "/login", request);
+        console.log(response);
         if(response.status == 200) {  
           alert("The login was successful!");
           const token = await response.text();
-          saveTheToken(token);   
-          //         
+          saveTheToken(token);       
           location.href = "placeorder.html";
         } else {
             console.log(`response status:${response.status}`);
@@ -103,6 +100,8 @@ async function signup() {
         let response = await fetch(getHost() + "/signup", request);
         if(response.status == 200) {  
             alert("The registration was successful!")
+            const token = await response.text();
+            localStorage.setItem("token", token);
             location.href = "login.html";
 
         } else {

@@ -14,7 +14,7 @@
 
     <div class="navbar">     
         <a href="cart.html"><i class="fa fa-fw fa-shopping-cart"></i> </a>
-        <li class="right"><a href="placeorder.html"><span id="itemCount">0</span></a></li> 
+        <li><a href="placeorder.html"><span id="itemCount">0</span></a></li> 
         <a href="login.html"><i class="fa fa-fw fa-user"></i> </a>
         <a href="add.html">Help</a>
         <a href="trackorder.html">Track Order</a> 
@@ -108,7 +108,7 @@
             };
             let innerHtml = `
               <div class="container">
-                <img src="http://localhost:8080/flowers/${flower.id}/image" alt="${flower.name}">
+                <img src="${getHost()}/flowers/${flower.id}/image" alt="${flower.name}">
                 <p>${flower.name}</p>   
                 <p>(from $ ${flower.cost})</p>           
               </div>`;

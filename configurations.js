@@ -38,23 +38,19 @@ let configuration = {
 };
 
 
-updateNavbar();
-updateItemCart();
 
 
 async function updateItemCart() {
   try {
-      let itemCount = 0;
+      let itemCount = 1; 
       document.getElementById("itemCount").textContent = itemCount;
   } catch (error) {
       console.error("Error updating item cart:", error);
   }
 }
 
-
-
 function emptyBasket() {
-  localStorage.removeItem("basket");
+  localStorage.removeItem("itemCount");
 }
 
 
@@ -76,8 +72,9 @@ async function login() {
         if(response.status == 200) {  
           alert("The login was successful!");
           const token = await response.text();
-          saveTheToken(token);            
-          location.href = "index.html";
+          saveTheToken(token);   
+          //         
+          location.href = "placeorder.html";
         } else {
             console.log(`response status:${response.status}`);
             removeTheToken();            
@@ -123,8 +120,23 @@ async function logout() {
   removeTheToken();  
 }
 
+async function getLoggedInUsername() {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      return null; 
+    }
+    const tokenPayload = token.split('.')[1];
+    const decodedToken = JSON.parse(atob(tokenPayload));
+    return decodedToken.username;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null; 
+  }
+}
+
 async function getAll() {
-  let response = await fetch(host_local + "/flowers", {
+  let response = await fetch(getHost() + "/flowers", {
 });
   let result = await response.json();
   return result;

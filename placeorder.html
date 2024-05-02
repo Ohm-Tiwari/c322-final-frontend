@@ -64,7 +64,7 @@
                 flowerId: cartItem.flowerId, 
                 flowerName: cartItem.flowerName,
                 recipientName: `${info.firstName} ${info.lastName}`,
-                totalCost: totalCost,
+                totalCost: purchasePrice,
                 status: "DONE",
                 customerUserName: configuration.isLoggedIn() ? getLoggedInUsername() : null 
             };

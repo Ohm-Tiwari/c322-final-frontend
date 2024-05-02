@@ -29,15 +29,11 @@ function getTheToken() {
 } 
 
 
-
-
 let configuration = {
   isLoggedIn: () => isLoggedIn(), 
   host: () => getHost(), 
   token: () => getTheToken()    
 };
-
-
 
 
 async function updateItemCart() {

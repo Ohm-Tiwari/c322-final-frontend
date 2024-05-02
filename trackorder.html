@@ -27,8 +27,11 @@
 <script>
     let host = getHost();
     let orders = [];
-    displayOrders();
-    emptyBasket();
+    
+    window.onload = function() {
+        displayOrders();
+        emptyBasket();
+    };
 
     async function getOrders(token){
             try {
